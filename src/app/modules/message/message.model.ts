@@ -1,6 +1,5 @@
 import { Schema, model } from 'mongoose';
 import { IMessage, MessageModel } from './message.interface';
-import { object } from 'zod';
 import { MESSAGE } from '../../../enums/message';
 
 const messageSchema = new Schema<IMessage, MessageModel>(

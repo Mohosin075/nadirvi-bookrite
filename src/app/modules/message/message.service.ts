@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import QueryBuilder from '../../../helpers/QueryBuilder';
 import { IMessage } from './message.interface';
 import { Message } from './message.model';
-import { checkMongooseIDValidation } from '../../../shared/checkMongooseIDValidation';
 import { Chat } from '../chat/chat.model';
 import { JwtPayload } from 'jsonwebtoken';
+import { checkMongooseIDValidation } from '../../../shared/checkMongooseIDValidation';
+import QueryBuilder from '../../builder/QueryBuilder';
 
 const sendMessageToDB = async (payload: any): Promise<IMessage> => {
 
@@ -28,7 +28,7 @@ const getMessageFromDB = async (id: string, user: JwtPayload, query: Record<stri
     Message.find({ chatId: id }).sort({ createdAt: 1 }),
     query
   ).paginate();
-  const messages = await result.queryModel;
+  const messages = await result.modelQuery.exec();
   const pagination = await result.getPaginationInfo();
 
   const participant = await Chat.findById(id).populate({

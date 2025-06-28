@@ -2,12 +2,12 @@ import { JwtPayload } from 'jsonwebtoken';
 import { INotification } from './notification.interface';
 import { Notification } from './notification.model';
 import { FilterQuery } from 'mongoose';
-import QueryBuilder from '../../../helpers/QueryBuilder';
+import QueryBuilder from '../../builder/QueryBuilder';
 
 // get notifications
 const getNotificationFromDB = async ( user: JwtPayload, query: FilterQuery<any> ): Promise<Object> => {
     const result = new QueryBuilder(Notification.find({ receiver: user.id }), query).paginate();
-    const notifications = await result.queryModel;
+    const notifications = await result.modelQuery.exec();
     const pagination = await result.getPaginationInfo();
 
     const unreadCount = await Notification.countDocuments({
@@ -38,7 +38,7 @@ const readNotificationToDB = async ( user: JwtPayload): Promise<INotification | 
 const adminNotificationFromDB = async (query: FilterQuery<any>): Promise<{notifications: INotification[], pagination: any}> => {
 
     const result = new QueryBuilder(Notification.find({ type: "ADMIN" }), query).paginate();
-    const notifications = await result.queryModel;
+    const notifications = await result.modelQuery.exec();
     const pagination = await result.getPaginationInfo();
     return {notifications, pagination};
 };

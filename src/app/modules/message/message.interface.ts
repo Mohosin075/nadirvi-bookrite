@@ -1,5 +1,5 @@
+import { MESSAGE } from './../../../enums/message';
 import { Model, Types } from 'mongoose';
-import { MESSAGE } from '../../../enums/message';
 
 export type IMessage = {
   _id?: Types.ObjectId;

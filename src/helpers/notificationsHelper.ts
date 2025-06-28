@@ -1,6 +1,5 @@
+import { INotification } from './../app/modules/notification/notification.interface';
 import { ClientSession } from "mongoose";
-import { INotification } from "../app/modules/notification/notification.interface";
-import { Notification } from "../app/modules/notification/notification.model";
 
 
 export const sendNotifications = async (payload:INotification, session?: ClientSession):Promise<INotification> =>{
